@@ -1,0 +1,38 @@
+[Unit]
+Description=AutoShopify API Server
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/autoshopify
+ExecStart=/usr/bin/python3 /opt/autoshopify/autoshopify.py --daemon --port 6902
+ExecStop=/bin/kill -TERM $MAINPID
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=10
+Environment=SHUTDOWN_KEY=your_secure_shutdown_key_here
+Environment=PYTHONPATH=/opt/autoshopify
+Environment=PYTHONUNBUFFERED=1
+
+# Security settings
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/autoshopify/logs
+ReadWritePaths=/opt/autoshopify
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=32768
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoshopify
+
+[Install]
+WantedBy=multi-user.target 
