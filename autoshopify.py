@@ -2850,5 +2850,7 @@ if __name__ == '__main__':
     else:
         # Normal mode
         print(f"Starting AutoShopify API Server in normal mode")
-        print(f"Server running on http://{args.host}:{args.port}")
-        app.run(host=args.host, port=args.port, debug=args.debug)
+        port = int(os.environ.get("PORT", 5000))
+        print(f"Server running on http://{args.host}:{port}")
+        app.run(host=args.host, port=port, debug=args.debug)
+
