@@ -1,1 +1,1 @@
-web: python3 autoshopify.py
+web: gunicorn autoshopify:app
